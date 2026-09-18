@@ -6,41 +6,40 @@
 
 const portfolioConfig = {
 
-    name: "Alex Pratama",
+    name: "ZULFATHAN FIRDAUS JUNIAR",
 
-    nickname: "Alex",
+    nickname: "FATHAN/ZUL",
 
-    school: "SMA Negeri 1 Harapan",
+    school: "SMK BHINEKA KARYA SIMO",
 
-    class: "XII",
+    class: "X",
 
-    major: "IPA",
+    major: "Teknik Komputer Jaringan",
 
-    city: "Bandung",
+    city: "Boyolali",
 
-    status: "Student",
+    status: "Sekolah",
 
     profileImage: "assets/images/profile.jpg",
 
-    bio: "Pelajar yang penasaran sama teknologi dan suka bikin hal-hal kecil jadi rapi.",
+    bio: "cihuyy.",
 
-    about: "Saya senang belajar hal baru, terutama yang berhubungan dengan komputer dan desain. Bagi saya, belajar itu bukan soal target, tapi soal terus bertanya 'kenapa' dan 'bagaimana'. Di luar sekolah, saya suka ngoprek project kecil dan mengamati detail-detail yang biasanya orang lain lewatkan.",
+    about: "none.",
 
-    interests: "Teknologi, desain antarmuka, dan musik elektronik.",
+    interests: "none.",
 
-    hobbies: "Ngoprek komputer, dengerin musik, dan sesekali nulis catatan random.",
+    hobbies: "game.",
 
-    goals: "Ingin terus belajar hal baru setiap minggu, sekecil apa pun itu.",
+    goals: "none.",
 
-    dream: "Menjadi seseorang yang karyanya bisa dipakai dan bermanfaat buat orang lain.",
+    dream: "none.",
 
     quote: "Never Stop Learning",
 
     social: {
-        instagram: "#",
-        github: "#",
-        tiktok: "#",
-        linkedin: "#"
+        instagram: "@dzul_fathan",
+        github: "@dzullfathan11",
+        tiktok: "@dzul_fathan",
     }
 
 };

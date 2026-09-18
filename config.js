@@ -28,7 +28,7 @@ const portfolioConfig = {
 
     dream: "none.",
 
-    quote: "Never Stop Learning",
+    quote: "ihir",
 
     social: {
         instagram: "@dzul_fathan",

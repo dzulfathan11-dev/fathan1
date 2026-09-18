@@ -1,209 +1,216 @@
-// Tunggu hingga dokumen dimuat
-document.addEventListener('DOMContentLoaded', () => {
+(function(){
+  "use strict";
 
-    // 1. POPULATE DATA FROM CONFIG
-    document.getElementById('brand-name').textContent = portfolioConfig.nickname;
-    document.getElementById('dom-name').textContent = portfolioConfig.name;
-    document.getElementById('dom-hero-bio').textContent = portfolioConfig.heroBio;
-    document.getElementById('dom-profile-img1').src = portfolioConfig.profileImage;
-    document.getElementById('dom-profile-img2').src = portfolioConfig.profileImage;
-    document.getElementById('dom-quote').textContent = portfolioConfig.quote;
-    
-    // Profile Details
-    document.getElementById('p-name').textContent = portfolioConfig.name;
-    document.getElementById('p-nickname').textContent = portfolioConfig.nickname;
-    document.getElementById('p-school').textContent = portfolioConfig.school;
-    document.getElementById('p-class').textContent = portfolioConfig.class;
-    document.getElementById('p-major').textContent = portfolioConfig.major;
-    document.getElementById('p-city').textContent = portfolioConfig.city;
-    document.getElementById('p-status').textContent = portfolioConfig.status;
+  /* -------------------------------------------
+     1. POPULATE CONTENT FROM config.js
+  ------------------------------------------- */
+  const cfg = window.portfolioConfig || {};
 
-    // About Section
-    document.getElementById('dom-about').textContent = portfolioConfig.about;
-    
-    const interestsList = document.getElementById('dom-interests');
-    portfolioConfig.interests.forEach(item => {
-        let li = document.createElement('li');
-        li.textContent = item;
-        interestsList.appendChild(li);
+  const setText = (id, value) => {
+    const el = document.getElementById(id);
+    if (el && value) el.textContent = value;
+  };
+  const setSrc = (id, value) => {
+    const el = document.getElementById(id);
+    if (el && value) el.src = value;
+  };
+
+  document.getElementById("navLogo").textContent = (cfg.nickname || cfg.name || "P").charAt(0);
+
+  setSrc("heroPhoto", cfg.profileImage);
+  setText("heroName", cfg.name);
+  setText("heroStatus", cfg.status);
+  setText("heroBio", cfg.bio);
+
+  setSrc("profilePhoto", cfg.profileImage);
+  setText("profileQuote", cfg.quote ? `“${cfg.quote}”` : "");
+  setText("profileBadgeStatus", cfg.status);
+  setText("profileName", cfg.name);
+  setText("profileNickname", cfg.nickname ? `@${cfg.nickname}` : "");
+  setText("fieldSchool", cfg.school);
+  setText("fieldClass", cfg.class);
+  setText("fieldMajor", cfg.major);
+  setText("fieldCity", cfg.city);
+  setText("profileBio", cfg.bio);
+
+  setText("aboutLead", cfg.about);
+  setText("aboutInterests", cfg.interests);
+  setText("aboutHobbies", cfg.hobbies);
+  setText("aboutGoals", cfg.goals);
+  setText("aboutDream", cfg.dream);
+
+  // Social icons (simple text glyphs, no external icon dependency)
+  const socialGlyphs = { instagram: "IG", github: "GH", tiktok: "TT", linkedin: "IN" };
+  const socialWrap = document.getElementById("heroSocial");
+  if (cfg.social && socialWrap) {
+    Object.keys(cfg.social).forEach((key) => {
+      const url = cfg.social[key];
+      if (!url) return;
+      const a = document.createElement("a");
+      a.href = url;
+      a.textContent = socialGlyphs[key] || key.slice(0, 2).toUpperCase();
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      socialWrap.appendChild(a);
     });
+  }
 
-    const goalsList = document.getElementById('dom-goals');
-    portfolioConfig.goals.forEach(item => {
-        let li = document.createElement('li');
-        li.textContent = item;
-        goalsList.appendChild(li);
-    });
+  /* -------------------------------------------
+     2. LOADER
+  ------------------------------------------- */
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+    setTimeout(() => loader.classList.add("hidden"), 350);
+  });
 
-    // Social Links
-    const socialContainer = document.getElementById('dom-social-home');
-    const socialIcons = {
-        instagram: 'fab fa-instagram',
-        github: 'fab fa-github',
-        tiktok: 'fab fa-tiktok',
-        linkedin: 'fab fa-linkedin-in'
-    };
-    
-    for (const [key, url] of Object.entries(portfolioConfig.social)) {
-        if (url && url !== "#") {
-            let a = document.createElement('a');
-            a.href = url;
-            a.target = "_blank";
-            a.innerHTML = `<i class="${socialIcons[key]}"></i>`;
-            socialContainer.appendChild(a);
-        }
+  /* -------------------------------------------
+     3. TYPING GREETING
+  ------------------------------------------- */
+  const greetEl = document.getElementById("typedGreeting");
+  const greetText = "Hello, I'm";
+  let gi = 0;
+  function typeGreeting() {
+    if (gi <= greetText.length) {
+      greetEl.textContent = greetText.slice(0, gi);
+      gi++;
+      setTimeout(typeGreeting, 65);
+    } else {
+      const caret = document.createElement("span");
+      caret.className = "cursor-caret";
+      greetEl.appendChild(caret);
     }
+  }
+  setTimeout(typeGreeting, 900);
 
-    // 2. LOADING SCREEN
-    window.onload = () => {
-        const loader = document.getElementById('loader');
-        setTimeout(() => {
-            loader.style.opacity = '0';
-            loader.style.visibility = 'hidden';
-        }, 500); // Waktu animasi loader
-    };
+  /* -------------------------------------------
+     4. SCROLL REVEAL
+  ------------------------------------------- */
+  const revealEls = document.querySelectorAll(".reveal");
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add("in"), i * 90);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  revealEls.forEach((el) => io.observe(el));
 
-    // 3. CUSTOM CURSOR
-    const cursorDot = document.querySelector('.cursor-dot');
-    const cursorOutline = document.querySelector('.cursor-outline');
-    
-    // Hanya aktifkan jika bukan perangkat layar sentuh
-    if (window.matchMedia("(pointer: fine)").matches) {
-        window.addEventListener('mousemove', (e) => {
-            const posX = e.clientX;
-            const posY = e.clientY;
-            
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
-            
-            // Efek delay halus untuk outline
-            cursorOutline.animate({
-                left: `${posX}px`,
-                top: `${posY}px`
-            }, { duration: 500, fill: "forwards" });
+  /* -------------------------------------------
+     5. NAVBAR: active link on scroll + mobile menu
+  ------------------------------------------- */
+  const sections = document.querySelectorAll(".section");
+  const navLinks = document.querySelectorAll(".nav-link, .nav-mobile-link");
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach((link) => {
+          link.classList.toggle("active", link.dataset.section === id);
         });
+      }
+    });
+  }, { threshold: 0.5 });
+  sections.forEach((s) => sectionObserver.observe(s));
 
-        // Hover Effect untuk Link & Buttons
-        const interactables = document.querySelectorAll('a, .glass');
-        interactables.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1.5)';
-                cursorOutline.style.backgroundColor = 'rgba(0, 229, 255, 0.1)';
-            });
-            el.addEventListener('mouseleave', () => {
-                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1)';
-                cursorOutline.style.backgroundColor = 'transparent';
-            });
-        });
+  const burger = document.getElementById("navBurger");
+  const mobileMenu = document.getElementById("navMobile");
+  burger.addEventListener("click", () => {
+    burger.classList.toggle("open");
+    mobileMenu.classList.toggle("open");
+  });
+  mobileMenu.querySelectorAll("a").forEach((a) => {
+    a.addEventListener("click", () => {
+      burger.classList.remove("open");
+      mobileMenu.classList.remove("open");
+    });
+  });
+
+  /* -------------------------------------------
+     6. CUSTOM CURSOR (desktop, pointer-fine only)
+  ------------------------------------------- */
+  if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    const dot = document.getElementById("cursorDot");
+    const ring = document.getElementById("cursorRing");
+    let rx = 0, ry = 0, mx = 0, my = 0;
+    window.addEventListener("mousemove", (e) => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left = mx + "px"; dot.style.top = my + "px";
+    });
+    function animateRing() {
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      ring.style.left = rx + "px"; ring.style.top = ry + "px";
+      requestAnimationFrame(animateRing);
     }
+    animateRing();
 
-    // 4. MOBILE MENU
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('nav-links');
-    const navItems = document.querySelectorAll('.nav-links a');
-
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navLinks.classList.toggle('active');
+    document.querySelectorAll("a, button, .profile-card, .about-card").forEach((el) => {
+      el.addEventListener("mouseenter", () => ring.style.transform = "translate(-50%,-50%) scale(1.6)");
+      el.addEventListener("mouseleave", () => ring.style.transform = "translate(-50%,-50%) scale(1)");
     });
+  }
 
-    navItems.forEach(item => {
-        item.addEventListener('click', () => {
-            hamburger.classList.remove('active');
-            navLinks.classList.remove('active');
-        });
+  /* -------------------------------------------
+     7. PROFILE CARD 3D TILT + SHINE
+  ------------------------------------------- */
+  const tiltCard = document.getElementById("tiltCard");
+  if (tiltCard && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    tiltCard.addEventListener("mousemove", (e) => {
+      const rect = tiltCard.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width;
+      const py = (e.clientY - rect.top) / rect.height;
+      const rotX = (py - 0.5) * -6;
+      const rotY = (px - 0.5) * 8;
+      tiltCard.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+      tiltCard.style.setProperty("--mx", `${px * 100}%`);
+      tiltCard.style.setProperty("--my", `${py * 100}%`);
     });
-
-    // 5. STICKY NAVBAR & ACTIVE LINK PADA SCROLL
-    const navbar = document.getElementById('navbar');
-    const sections = document.querySelectorAll('section');
-
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (scrollY >= sectionTop - 200) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        navItems.forEach(a => {
-            a.classList.remove('active');
-            if (a.getAttribute('href').includes(current)) {
-                a.classList.add('active');
-            }
-        });
+    tiltCard.addEventListener("mouseleave", () => {
+      tiltCard.style.transform = "perspective(900px) rotateX(0) rotateY(0)";
     });
+  }
 
-    // 6. SCROLL REVEAL ANIMATION
-    const reveals = document.querySelectorAll('.reveal');
-    const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
-    
-    const revealOnScroll = new IntersectionObserver(function(entries, observer) {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add('active');
-            observer.unobserve(entry.target);
-        });
-    }, revealOptions);
+  /* -------------------------------------------
+     8. PARTICLE BACKGROUND (lightweight canvas)
+  ------------------------------------------- */
+  const canvas = document.getElementById("particles");
+  const ctx = canvas.getContext("2d");
+  let particles = [];
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    reveals.forEach(reveal => revealOnScroll.observe(reveal));
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = document.documentElement.scrollHeight;
+  }
+  function initParticles() {
+    const count = Math.min(60, Math.floor(window.innerWidth / 22));
+    particles = Array.from({ length: count }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.6 + 0.4,
+      vy: Math.random() * 0.25 + 0.05,
+      o: Math.random() * 0.5 + 0.15,
+      hue: Math.random() > 0.5 ? "62,166,255" : "35,230,209"
+    }));
+  }
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach((p) => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.hue},${p.o})`;
+      ctx.fill();
+      p.y -= p.vy;
+      if (p.y < -10) { p.y = canvas.height + 10; p.x = Math.random() * canvas.width; }
+    });
+    if (!reduceMotion) requestAnimationFrame(drawParticles);
+  }
 
-    // 7. 3D TILT EFFECT UNTUK GLASS CARD
-    const tiltCards = document.querySelectorAll('.tilt-card');
-    
-    if (window.matchMedia("(pointer: fine)").matches) {
-        tiltCards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const rotateX = ((y - centerY) / centerY) * -10; // Max rotasi 10 derajat
-                const rotateY = ((x - centerX) / centerX) * 10;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
-            });
-        });
-    }
+  resizeCanvas();
+  initParticles();
+  drawParticles();
+  window.addEventListener("resize", () => { resizeCanvas(); initParticles(); });
 
-    // 8. BACKGROUND PARTICLES GENERATOR
-    const particlesContainer = document.getElementById('particles-container');
-    const createParticle = () => {
-        const particle = document.createElement('div');
-        particle.classList.add('particle');
-        
-        // Random ukuran, posisi, dan kecepatan
-        const size = Math.random() * 5 + 2; // 2px - 7px
-        const posX = Math.random() * window.innerWidth;
-        const duration = Math.random() * 10 + 10; // 10s - 20s
-        
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.left = `${posX}px`;
-        particle.style.animationDuration = `${duration}s`;
-        
-        particlesContainer.appendChild(particle);
-        
-        // Hapus elemen setelah animasi selesai agar DOM tidak berat
-        setTimeout(() => {
-            particle.remove();
-        }, duration * 1000);
-    };
-    
-    // Buat partikel baru setiap 800ms
-    setInterval(createParticle, 800);
-});
+})();

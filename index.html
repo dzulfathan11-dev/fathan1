@@ -1,112 +1,139 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Student Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <!-- Font Awesome untuk Ikon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Custom Cursor -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+  <!-- Loading screen -->
+  <div id="loader">
+    <div class="loader-ring"></div>
+  </div>
 
-    <!-- Background Elements -->
+  <!-- Animated background -->
+  <div class="bg-scene">
     <div class="bg-grid"></div>
-    <div class="blob blob-blue"></div>
-    <div class="blob blob-cyan"></div>
-    <div id="particles-container"></div>
+    <div class="bg-blob blob-a"></div>
+    <div class="bg-blob blob-b"></div>
+    <canvas id="particles"></canvas>
+  </div>
 
-    <!-- Navbar -->
-    <nav id="navbar" class="glass-nav">
-        <div class="nav-brand">
-            <span class="logo-text" id="brand-name">STUDENT</span><span class="dot">.</span>
+  <!-- Custom cursor (desktop only) -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo" id="navLogo">A</a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#home" class="nav-link active" data-section="home">Home</a>
+        <a href="#profile" class="nav-link" data-section="profile">Profile</a>
+        <a href="#about" class="nav-link" data-section="about">About</a>
+      </nav>
+      <button class="nav-burger" id="navBurger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="navMobile">
+      <a href="#home" class="nav-mobile-link" data-section="home">Home</a>
+      <a href="#profile" class="nav-mobile-link" data-section="profile">Profile</a>
+      <a href="#about" class="nav-mobile-link" data-section="about">About</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- HOME -->
+    <section id="home" class="section hero">
+      <div class="hero-inner">
+        <div class="hero-photo-wrap">
+          <div class="hero-photo-glow"></div>
+          <img class="hero-photo" id="heroPhoto" src="" alt="" onerror="this.style.display='none'">
         </div>
-        <div class="hamburger" id="hamburger">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
+        <p class="hero-eyebrow" id="typedGreeting"></p>
+        <h1 class="hero-name" id="heroName"></h1>
+        <p class="hero-status" id="heroStatus"></p>
+        <p class="hero-bio" id="heroBio"></p>
+        <div class="hero-social" id="heroSocial"></div>
+      </div>
+      <div class="scroll-hint">
+        <span></span>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section id="profile" class="section profile-section">
+      <div class="section-inner">
+        <div class="profile-card reveal" id="tiltCard">
+          <div class="profile-card-shine"></div>
+          <div class="profile-photo-col">
+            <div class="profile-photo-frame">
+              <img id="profilePhoto" src="" alt="" onerror="this.style.display='none'">
+            </div>
+            <p class="profile-quote" id="profileQuote"></p>
+          </div>
+          <div class="profile-info-col">
+            <span class="profile-badge" id="profileBadgeStatus"></span>
+            <h2 class="profile-name" id="profileName"></h2>
+            <p class="profile-nickname" id="profileNickname"></p>
+            <div class="profile-grid">
+              <div class="profile-field reveal">
+                <span class="field-label">Sekolah</span>
+                <span class="field-value" id="fieldSchool"></span>
+              </div>
+              <div class="profile-field reveal">
+                <span class="field-label">Kelas</span>
+                <span class="field-value" id="fieldClass"></span>
+              </div>
+              <div class="profile-field reveal">
+                <span class="field-label">Jurusan</span>
+                <span class="field-value" id="fieldMajor"></span>
+              </div>
+              <div class="profile-field reveal">
+                <span class="field-label">Kota</span>
+                <span class="field-value" id="fieldCity"></span>
+              </div>
+            </div>
+            <p class="profile-bio" id="profileBio"></p>
+          </div>
         </div>
-        <ul class="nav-links" id="nav-links">
-            <li><a href="#home" class="active">Home</a></li>
-            <li><a href="#profile">Profile</a></li>
-            <li><a href="#about">About</a></li>
-        </ul>
-    </nav>
+      </div>
+    </section>
 
-    <!-- Main Content -->
-    <main>
-        <!-- HOME SECTION -->
-        <section id="home" class="section">
-            <div class="home-content reveal">
-                <div class="hero-text">
-                    <p class="greeting">Hello, I'm</p>
-                    <h1 class="glitch-text" id="dom-name">Name</h1>
-                    <h2 class="typing-container"><span id="dom-status" class="neon-text">Student</span><span class="cursor-blink">|</span></h2>
-                    <p class="hero-bio" id="dom-hero-bio">Loading bio...</p>
-                    <div class="social-links" id="dom-social-home">
-                        <!-- Injected via JS -->
-                    </div>
-                </div>
-                <div class="hero-image-wrapper glass tilt-card">
-                    <img id="dom-profile-img1" src="" alt="Profile" class="profile-img">
-                    <div class="img-glow"></div>
-                </div>
-            </div>
-        </section>
+    <!-- ABOUT -->
+    <section id="about" class="section about-section">
+      <div class="section-inner">
+        <h2 class="about-title reveal">About Me</h2>
+        <p class="about-lead reveal" id="aboutLead"></p>
+        <div class="about-grid">
+          <div class="about-card reveal">
+            <span class="about-card-label">Minat</span>
+            <p id="aboutInterests"></p>
+          </div>
+          <div class="about-card reveal">
+            <span class="about-card-label">Hobi</span>
+            <p id="aboutHobbies"></p>
+          </div>
+          <div class="about-card reveal">
+            <span class="about-card-label">Tujuan</span>
+            <p id="aboutGoals"></p>
+          </div>
+          <div class="about-card reveal">
+            <span class="about-card-label">Cita-cita</span>
+            <p id="aboutDream"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-        <!-- PROFILE SECTION -->
-        <section id="profile" class="section">
-            <h2 class="section-title reveal">My <span class="neon-text">Profile</span></h2>
-            <div class="profile-container glass tilt-card reveal delay-1">
-                <div class="profile-header">
-                    <div class="profile-avatar">
-                        <img id="dom-profile-img2" src="" alt="Profile">
-                    </div>
-                    <div class="quote-box">
-                        <i class="fas fa-quote-left"></i>
-                        <p id="dom-quote">Quote here</p>
-                    </div>
-                </div>
-                <div class="profile-details">
-                    <div class="detail-item"><span class="label">Nama</span><span class="value" id="p-name"></span></div>
-                    <div class="detail-item"><span class="label">Panggilan</span><span class="value" id="p-nickname"></span></div>
-                    <div class="detail-item"><span class="label">Sekolah</span><span class="value" id="p-school"></span></div>
-                    <div class="detail-item"><span class="label">Kelas</span><span class="value" id="p-class"></span></div>
-                    <div class="detail-item"><span class="label">Jurusan</span><span class="value" id="p-major"></span></div>
-                    <div class="detail-item"><span class="label">Kota</span><span class="value" id="p-city"></span></div>
-                    <div class="detail-item"><span class="label">Status</span><span class="value neon-text" id="p-status"></span></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ABOUT SECTION -->
-        <section id="about" class="section">
-            <h2 class="section-title reveal">About <span class="neon-text">Me</span></h2>
-            <div class="about-grid">
-                <div class="about-card glass reveal delay-1">
-                    <h3><i class="fas fa-user-astronaut"></i> Story</h3>
-                    <p id="dom-about">Loading about...</p>
-                </div>
-                <div class="about-card glass reveal delay-2">
-                    <h3><i class="fas fa-gamepad"></i> Interests</h3>
-                    <ul id="dom-interests" class="glow-list"></ul>
-                </div>
-                <div class="about-card glass reveal delay-3">
-                    <h3><i class="fas fa-rocket"></i> Goals</h3>
-                    <ul id="dom-goals" class="glow-list"></ul>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Scripts -->
-    <script src="config.js"></script>
-    <script src="script.js"></script>
+  <script src="config.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

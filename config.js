@@ -1,9 +1,3 @@
-// ==================================================
-// PORTFOLIO CONFIG
-// Ganti semua nilai di bawah ini sesuai data kamu.
-// Tidak perlu menyentuh file lain.
-// ==================================================
-
 const portfolioConfig = {
 
     name: "ZULFATHAN FIRDAUS JUNIAR",

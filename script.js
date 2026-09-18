@@ -4,8 +4,7 @@
   /* -------------------------------------------
      1. POPULATE CONTENT FROM config.js
   ------------------------------------------- */
-  const cfg = window.portfolioConfig || {};
-
+   const cfg = (typeof portfolioConfig !== "undefined") ? portfolioConfig : {};
   const setText = (id, value) => {
     const el = document.getElementById(id);
     if (el && value) el.textContent = value;

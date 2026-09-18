@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FATHAN PORTOFOLIO</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Loading Screen -->
+    <div id="loader" class="loader-container">
+        <div class="loader-ring"></div>
+        <div class="loader-text">INITIALIZING...</div>
+    </div>
+
+    <!-- Background Elements -->
+    <div class="bg-grid"></div>
+    <div class="blob blob-blue"></div>
+    <div class="blob blob-cyan"></div>
+    <div id="particles-container"></div>
+
+    <!-- Navbar -->
+    <nav id="navbar" class="glass-nav">
+        <div class="nav-brand">
+            <span class="logo-text" id="brand-name">STUDENT</span><span class="dot">.</span>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#profile">Profile</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- HOME SECTION -->
+        <section id="home" class="section">
+            <div class="home-content reveal">
+                <div class="hero-text">
+                    <p class="greeting">Hello, I'm</p>
+                    <h1 class="glitch-text" id="dom-name">Name</h1>
+                    <h2 class="typing-container"><span id="dom-status" class="neon-text">Student</span><span class="cursor-blink">|</span></h2>
+                    <p class="hero-bio" id="dom-hero-bio">Loading bio...</p>
+                    <div class="social-links" id="dom-social-home">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+                <div class="hero-image-wrapper glass tilt-card">
+                    <img id="dom-profile-img1" src="" alt="Profile" class="profile-img">
+                    <div class="img-glow"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROFILE SECTION -->
+        <section id="profile" class="section">
+            <h2 class="section-title reveal">My <span class="neon-text">Profile</span></h2>
+            <div class="profile-container glass tilt-card reveal delay-1">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <img id="dom-profile-img2" src="" alt="Profile">
+                    </div>
+                    <div class="quote-box">
+                        <i class="fas fa-quote-left"></i>
+                        <p id="dom-quote">Quote here</p>
+                    </div>
+                </div>
+                <div class="profile-details">
+                    <div class="detail-item"><span class="label">Nama</span><span class="value" id="p-name"></span></div>
+                    <div class="detail-item"><span class="label">Panggilan</span><span class="value" id="p-nickname"></span></div>
+                    <div class="detail-item"><span class="label">Sekolah</span><span class="value" id="p-school"></span></div>
+                    <div class="detail-item"><span class="label">Kelas</span><span class="value" id="p-class"></span></div>
+                    <div class="detail-item"><span class="label">Jurusan</span><span class="value" id="p-major"></span></div>
+                    <div class="detail-item"><span class="label">Kota</span><span class="value" id="p-city"></span></div>
+                    <div class="detail-item"><span class="label">Status</span><span class="value neon-text" id="p-status"></span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about" class="section">
+            <h2 class="section-title reveal">About <span class="neon-text">Me</span></h2>
+            <div class="about-grid">
+                <div class="about-card glass reveal delay-1">
+                    <h3><i class="fas fa-user-astronaut"></i> Story</h3>
+                    <p id="dom-about">Loading about...</p>
+                </div>
+                <div class="about-card glass reveal delay-2">
+                    <h3><i class="fas fa-gamepad"></i> Interests</h3>
+                    <ul id="dom-interests" class="glow-list"></ul>
+                </div>
+                <div class="about-card glass reveal delay-3">
+                    <h3><i class="fas fa-rocket"></i> Goals</h3>
+                    <ul id="dom-goals" class="glow-list"></ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
